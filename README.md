@@ -20,3 +20,22 @@ DoctorApp is a medical app that allows you to view your doctor appointments.
 
 - information: name, email, phone number
 - appointments: date, time
+
+## How to run
+
+```sh
+# Choose the app you want to run
+cd mockbook
+# or
+cd doctorapp
+
+# Install dependencies
+pnpm install
+
+# Compile and Hot-Reload for Development
+pnpm dev
+
+# Build for production
+pnpm build
+
+```

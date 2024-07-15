@@ -1,9 +1,11 @@
-<script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
-
 <template>
-  <HelloWorld msg="DoctorApp" />
+  <header>
+    <h1>DoctorApp</h1>
+  </header>
+
+  <RouterView />
 </template>
+
+<script setup lang="ts"></script>
 
 <style scoped></style>

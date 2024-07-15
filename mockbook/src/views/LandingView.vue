@@ -15,7 +15,7 @@ const login = async () => {
     await store.session.login({
       oidcIssuer: idp,
       redirectUrl: new URL("/home", window.location.href).toString(),
-      clientName: "LOAMA",
+      clientName: "MOCKBOOK",
     });
   } catch (error) {
     throw new Error(`Login failed: ${error}`);

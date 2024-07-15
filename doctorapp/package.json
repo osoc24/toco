@@ -9,8 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@inrupt/solid-client-authn-browser": "^2.2.4",
     "loama-controller": "link:..\\..\\loama\\controller",
-    "vue": "^3.4.29"
+    "vue": "^3.4.29",
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "1.8.0",

@@ -1,8 +1,4 @@
 <template>
-  <header>
-    <h1>Mockbook</h1>
-  </header>
-
   <RouterView />
 </template>
 

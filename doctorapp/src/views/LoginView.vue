@@ -59,7 +59,7 @@ export default {
 
 .left-panel {
   flex: 1;
-  background-color: #D9E1F0;
+  background-color: #E7F9E8;
 }
 
 .right-panel {

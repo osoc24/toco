@@ -1,8 +1,4 @@
 <template>
-  <header>
-    <h1>DoctorApp</h1>
-  </header>
-
   <RouterView />
 </template>
 

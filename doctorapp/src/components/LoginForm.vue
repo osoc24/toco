@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <h1>MockBook</h1>
+    <h1>DoctorApp</h1>
     <form @submit.prevent="login">
       <div class="input-group">
         <label for="solid-pod-url">Solid Pod URL:</label>
@@ -38,7 +38,7 @@ export default {
         await store.session.login({
           oidcIssuer: issuer,
           redirectUrl: new URL('/home', window.location.href).toString(),
-          clientName: 'MOCKBOOK'
+          clientName: 'DOCTORAPP'
         });
 
         // Reset warning on successful login

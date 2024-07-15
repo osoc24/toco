@@ -1,9 +1,11 @@
-<script setup lang="ts">
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
-
 <template>
-  <HelloWorld msg="MockBook" />
+  <header>
+    <h1>Mockbook</h1>
+  </header>
+
+  <RouterView />
 </template>
+
+<script setup lang="ts"></script>
 
 <style scoped></style>

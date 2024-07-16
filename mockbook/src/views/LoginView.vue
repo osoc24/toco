@@ -1,7 +1,7 @@
 <template>
   <div class="signin-container">
     <div class="left-panel">
-      <LoginForm @toggle-provider="toggleSidePanel" />
+      <LoginForm @toggle-provider="toggleSidePanel" title="MockBook" />
       <SidePanel
         :is-open="isPanelOpen"
         @toggle-provider="toggleSidePanel"

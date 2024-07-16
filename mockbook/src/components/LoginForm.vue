@@ -1,6 +1,6 @@
 <template>
   <div class="form-container">
-    <h1>MockBook</h1>
+    <h1>{{ title }}</h1>
     <form @submit.prevent="login">
       <div class="input-group">
         <label for="solid-pod-url">Solid Pod URL:</label>
@@ -18,52 +18,46 @@
   </div>
 </template>
 
-<script lang="ts">
-import { ref } from 'vue';
-import {store} from '@/store';
+<script setup lang="ts">
+import { ref, defineProps, defineEmits } from 'vue';
+import { store } from '@/store';
 
-export default {
-  setup(props, { emit }) {
-    const solidPodUrl = ref<string>('');
-    const idp = ref<string>("https://css12.onto-deside.ilabt.imec.be/");
-    const showWarning = ref<boolean>(false);
-    const isLoading = ref<boolean>(false);
-
-    const login = async () => {
-      isLoading.value = true;
-      try {
-        const issuer = solidPodUrl.value.trim() !== '' ? solidPodUrl.value.trim() : idp.value;
-
-        // Attempt login
-        await store.session.login({
-          oidcIssuer: issuer,
-          redirectUrl: new URL('/home', window.location.href).toString(),
-          clientName: 'MOCKBOOK'
-        });
-
-        // Reset warning on successful login
-        showWarning.value = false;
-      } catch (error) {
-        // Show warning on failed login
-        showWarning.value = true;
-      } finally {
-        isLoading.value = false;
-      }
-    };
-
-    const setDefaultIdp = () => {
-      idp.value = "https://css12.onto-deside.ilabt.imec.be/";
-      emit('toggle-provider');
-    };
-
-    return {
-      solidPodUrl,
-      login,
-      setDefaultIdp,
-      showWarning,
-      isLoading
-    };
+const props = defineProps({
+  title: {
+    type: String,
+    required: true
   }
+});
+
+const emit = defineEmits(['toggle-provider']);
+
+const solidPodUrl = ref<string>('');
+const idp = ref<string>('https://css12.onto-deside.ilabt.imec.be/');
+const showWarning = ref<boolean>(false);
+const isLoading = ref<boolean>(false);
+
+const login = () => {
+  isLoading.value = true;
+  const issuer = solidPodUrl.value.trim() || idp.value;
+
+  store.session.login({
+    oidcIssuer: issuer,
+    redirectUrl: new URL('/home', window.location.href).toString(),
+    clientName: 'MOCKBOOK',
+  })
+  .then(() => {
+    showWarning.value = false;
+    isLoading.value = false;
+  })
+  .catch((e) => {
+    showWarning.value = true;
+    isLoading.value = false;
+  });
+};
+
+const setDefaultIdp = () => {
+  idp.value = 'https://css12.onto-deside.ilabt.imec.be/';
+  emit('toggle-provider');
 };
 </script>
 

@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import LoginForm from '@/components/LoginForm.vue';
-import Logo from '@/components/Logo.vue';
-import SidePanel from '@/components/SidePanel.vue';
+import LoginForm from '@/components/login/LoginForm.vue';
+import Logo from '@/components/login/Logo.vue';
+import SidePanel from '@/components/login/SidePanel.vue';
 
 export default {
   name: 'login',

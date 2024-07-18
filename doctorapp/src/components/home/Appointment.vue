@@ -4,14 +4,25 @@
         <span class="appointment-author">Appointment 1</span>
       </div>
       <div class="appointment-content">
-        <p>Time: {{ sheduledTime }}</p>
+        <div>
+          <p><strong>Time:</strong> {{ time }}</p>
+          <p><strong>Date:</strong> {{ date }}</p>
+        </div>
+        <div>
+          <p><strong>Type:</strong> {{ type }}</p>
+          <p><strong>Location:</strong> {{ location }}</p>
+        </div>
       </div>
     </div>
   </template>
   
   <script setup lang="ts">
   const props = defineProps<{
-    sheduledTime: string
+    time: string;
+    date: string;
+    type: string;
+    location: string;
+    provider: string;
   }>();
   </script>
   
@@ -26,11 +37,17 @@
   
   .appointment-header {
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
   }
   
   .appointment-content, .appointment-content p {
     margin-bottom: 0.5rem;
+  }
+
+  .appointment-content {
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
   }
   </style>
   

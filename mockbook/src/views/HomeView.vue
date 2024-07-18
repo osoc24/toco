@@ -2,10 +2,10 @@
   <Header pfp-src="https://thispersondoesnotexist.com" :name="userProfile.name"></Header>
   <main>
     <div class="profile">
-      <p>{{ userProfile.description }}</p>
-      <p>{{ userProfile.mbox }}</p>
+      <!-- <p>{{ userProfile.description }}</p> -->
+      <!-- <p>{{ userProfile.mbox }}</p> -->
     </div>
-    <Posts :posts="postsData" />
+    <Posts :posts="postsData" :name="userProfile.name"/>
   </main>
 </template>
 
@@ -14,7 +14,7 @@ import { onMounted, ref } from 'vue';
 import Header from '@/components/home/Header.vue';
 import Posts from '@/components/home/Posts.vue';
 
-import { fetchUserProfile, fetchPosts, test } from '@/lib/solid';
+import { getPosts, getProfileInfo, getAppointments } from '@/lib/solid';
 import router from '@/router';
 import { store } from '@/store';
 import type { Session } from '@inrupt/solid-client-authn-browser';
@@ -26,28 +26,23 @@ const userProfile = ref({
   img: '',
   description: ''
 });
-const postsData = ref<{name: string, image: string, text: string, video: string}[]>([]);
+const postsData = ref();
 
-const podUrl = 'https://css12.onto-deside.ilabt.imec.be';
+const podUrl = 'https://css12.onto-deside.ilabt.imec.be/osoc1';
 
-// const fetchedUserProfile = await test(session as Session, podUrl);
-// console.log("fetchedUserProfile", fetchedUserProfile);
+onMounted(async () => {
+  try {
+    const fetchedUserProfile = await getProfileInfo(session as Session, podUrl);
+    console.log("fetchedUserProfile", fetchedUserProfile);
+    userProfile.value = fetchedUserProfile;
 
-// userProfile.value = {
-//   name: fetchedUserProfile.name ?? '',
-//   mbox: fetchedUserProfile.mbox ?? '',
-//   img: fetchedUserProfile.img ?? '',
-//   description: fetchedUserProfile.description ?? ''
-// };
-// postsData.value = await fetchPosts(session, podUrl);
-
-const postDataItems = [
-  { name: userProfile.value.name, image: "", text: "Hi, team Inc!", video: "" },
-  { name: userProfile.value.name, image: "https://via.placeholder.com/150", text: "New profile pic", video: "" }
-]
-
-
-postsData.value = postDataItems;
+    const posts = await getPosts(session as Session, podUrl);
+    console.log("fetchPosts", posts);
+    postsData.value = posts;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+});
 </script>
 
 <style scoped>

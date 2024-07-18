@@ -11,6 +11,9 @@ dependencies:
   '@inrupt/solid-client-authn-browser':
     specifier: ^2.2.4
     version: 2.2.4
+  '@inrupt/vocab-common-rdf':
+    specifier: ^1.0.5
+    version: 1.0.5
   loama-controller:
     specifier: link:..\..\loama\controller
     version: link:../../loama/controller
@@ -778,6 +781,10 @@ packages:
       fsevents: 2.3.3
     transitivePeerDependencies:
       - encoding
+    dev: false
+
+  /@inrupt/vocab-common-rdf@1.0.5:
+    resolution: {integrity: sha512-onrehQte8m0XW83WwM6T4o5WgmYGzdYUCef6FDjMKfQCF64FnARFNn5fYhKodimBaAOFKhuJ3vw1NBZV/EYqJw==}
     dev: false
 
   /@jridgewell/gen-mapping@0.3.5:

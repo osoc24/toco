@@ -1,48 +1,52 @@
 <template>
   <div class="dashboard">
-    <Header pfp-src="https://thispersondoesnotexist.com" name="victor" title="DOCTORAPP"></Header>
+    <Header :pfp-src="userProfile.img" :name="userProfile.name" title="DOCTORAPP"></Header>
     <main>
       <Appointments :appointments="appointmentsData" class="appointments"/>
-      <Sidebar :name="personalData.name" :description="personalData.description" :mbox="personalData.mbox" :img="personalData.img" :phone="personalData.phone" class="personal-information"/>
+      <Sidebar :name="userProfile.name" :description="userProfile.description" :mbox="userProfile.mbox" :img="userProfile.img" :phone="userProfile.phone" class="personal-information"/>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import Header from '@/components/home/Header.vue';
 import Appointments from '@/components/home/Appointments.vue';
 import Sidebar from '@/components/home/Sidebar.vue';
+import { getPosts, getProfileInfo, getAppointments } from '@/lib/solid';
+import type { Session } from '@inrupt/solid-client-authn-browser';
 
 import router from "@/router";
 import { store } from "@/store";
 
 const session = store.session;
+const userProfile = ref({
+  name: 'Default Name',
+  mbox: '',
+  img: '',
+  description: '',
+  phone: ''
+});
+const appointmentsData = ref();
 
-const appointmentsData = [
-  { sheduledTime: "10:00" },
-  { sheduledTime: "11:00" },
-  { sheduledTime: "12:00" },
-  { sheduledTime: "13:00" },
-  { sheduledTime: "14:00" },
-  { sheduledTime: "15:00" },
-  { sheduledTime: "16:00" },
-  { sheduledTime: "17:00" },
-  { sheduledTime: "18:00" },
-  { sheduledTime: "19:00" },
-  { sheduledTime: "20:00" },
-  { sheduledTime: "21:00" },
-  { sheduledTime: "22:00" },
-  { sheduledTime: "23:00" },
-  { sheduledTime: "24:00" },
-];
+const podUrl = 'https://css12.onto-deside.ilabt.imec.be/osoc1';
 
-const personalData = {
-  name: "Victor",
-  description: "Doctor",
-  mbox: "victor.barra@live.be",
-  img: "https://thispersondoesnotexist.com",
-  phone: "0487 12 34 56",
-};
+onMounted(async () => {
+  try {
+    const fetchedUserProfile = await getProfileInfo(session as Session, podUrl);
+    console.log("fetchedUserProfile", fetchedUserProfile);
+    userProfile.value = fetchedUserProfile;
+
+    const appointments = await getAppointments(session as Session, podUrl);
+    console.log("fetchappointments", appointments);
+    appointmentsData.value = appointments;
+
+    const posts = await getPosts(session as Session, podUrl);
+    console.log("fetchposts", posts);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+});
 </script>
 
 <style scoped>
@@ -66,12 +70,10 @@ main {
 }
 
 .personal-information {
-  width: 33.33%; /* 1/3 of the width */
-  height: 100%; /* Ensure it takes the full height */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #ffffff; /* Optional: Add a background color for clarity */
+  width: 33.33%;
+  height: 100%; 
+  justify-content: start;
+  align-items: start;
+  background-color: #ffffff; 
 }
 </style>

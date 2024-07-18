@@ -1,39 +1,38 @@
 <template>
-    <div class="personal-information">
-        <h1>{{ name }}</h1>
-        <p>Description: {{ description }}</p>
-        <p>Email: {{ mbox }}</p>
-        <img :src="img" alt="profile picture" />
-         <p>Phone Number: {{ phone }}</p>
-    </div>
-  </template>
-  
-  <script setup lang="ts">
-    import { defineProps } from 'vue';
+  <div class="personal-information">
+    <img :src="img" alt="profile picture" />
+    <h1>{{ name }}</h1>
+    <p><strong>Description:</strong> {{ description.slice(0, 150) }} ...</p>
+    <p><strong>Email:</strong> <a :href="'mailto:' + mbox">{{ mbox.replace('mailto:', '') }}</a></p>
+    <p><strong>Phone Number:</strong> <a :href="'tel:' + phone">{{ phone.replace('tel:', '') }}</a></p>
+  </div>
+</template>
 
-    const props = defineProps<{
-      name: string;
-      description: string;
-      mbox: string;
-      img: string;
-      phone: string;
-    }>();
+<script setup lang="ts">
+import { defineProps } from 'vue';
 
-  </script>
-  
-    
-  <style scoped>
-  .personal-information {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+const props = defineProps<{
+  name: string;
+  description: string;
+  mbox: string;
+  img: string;
+  phone: string;
+}>();
+</script>
 
-  }
-  img {
-    border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
-  }
-  </style>
-  
-    
+<style scoped>
+.personal-information {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  justify-content: start;
+  align-items: start;
+  padding: 4rem;
+}
+
+img {
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+}
+</style>

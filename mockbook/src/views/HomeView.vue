@@ -14,7 +14,8 @@ import { onMounted, ref } from 'vue';
 import Header from '@/components/home/Header.vue';
 import Posts from '@/components/home/Posts.vue';
 
-import { getPosts, getProfileInfo, getAppointments } from '@/lib/solid';
+// import { getPosts, getProfileInfo, getAppointments } from '@/lib/solid';
+import {getPosts, getProfileInfo} from 'loama-controller';
 import router from '@/router';
 import { store } from '@/store';
 import type { Session } from '@inrupt/solid-client-authn-browser';

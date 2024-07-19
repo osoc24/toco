@@ -1,7 +1,7 @@
 <template>
     <div class="appointment">
       <div class="appointment-header">
-        <span class="appointment-author">Appointment 1</span>
+        <span class="appointment-author">Appointment</span>
       </div>
       <div class="appointment-content">
         <div>

@@ -1,22 +1,28 @@
 <template>
   <div class="dashboard">
-    <Header :pfp-src="userProfile.img" :name="userProfile.name" title="DOCTORAPP"></Header>
+    <HeaderBase :pfp-src="userProfile.img" :name="userProfile.name" title="DOCTORAPP"></HeaderBase>    
     <main>
-      <Appointments :appointments="appointmentsData" class="appointments"/>
-      <Sidebar :name="userProfile.name" :description="userProfile.description" :mbox="userProfile.mbox" :img="userProfile.img" :phone="userProfile.phone" class="personal-information"/>
+      <div v-if="appointmentsError" class="error-message">
+        <p>Unable to load appointments. Please check your access permissions or try again later.</p>
+      </div>
+      <div v-else class="appointments-container">
+        <Appointments v-if="appointmentsData" :appointments="appointmentsData" class="appointments"/>
+      </div>
+      <div v-if="profileError" class="error-message">
+        <p>Unable to load profile information. Please check your access permissions or try again later.</p>
+      </div>
+      <Sidebar v-else :name="userProfile.name" :description="userProfile.description" :mbox="userProfile.mbox" :img="userProfile.img" :phone="userProfile.phone" class="personal-information"/>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import Header from '@/components/home/Header.vue';
+import HeaderBase from '@/components/home/header/HeaderBase.vue';
 import Appointments from '@/components/home/Appointments.vue';
 import Sidebar from '@/components/home/Sidebar.vue';
-import { getPosts, getProfileInfo, getAppointments } from '@/lib/solid';
 import type { Session } from '@inrupt/solid-client-authn-browser';
-
-import router from "@/router";
+import { getAppointments, getProfileInfo } from 'loama-controller';
 import { store } from "@/store";
 
 const session = store.session;
@@ -28,25 +34,27 @@ const userProfile = ref({
   phone: ''
 });
 const appointmentsData = ref();
+const appointmentsError = ref(false);
+const profileError = ref(false);
 
-const podUrl = 'https://css12.onto-deside.ilabt.imec.be/osoc1';
+const podUrl = store.usedPod.replace(/\/$/, '');
 
 onMounted(async () => {
-  try {
-    const fetchedUserProfile = await getProfileInfo(session as Session, podUrl);
-    console.log("fetchedUserProfile", fetchedUserProfile);
-    userProfile.value = fetchedUserProfile;
+    try {
+      const fetchedUserProfile = await getProfileInfo(session as Session, podUrl);
+      userProfile.value = fetchedUserProfile;
+      console.log("userprofile", fetchedUserProfile);
+    } catch (error) {
+      profileError.value = true;
+    }
 
-    const appointments = await getAppointments(session as Session, podUrl);
-    console.log("fetchappointments", appointments);
-    appointmentsData.value = appointments;
-
-    const posts = await getPosts(session as Session, podUrl);
-    console.log("fetchposts", posts);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-});
+    try {
+      const appointments = await getAppointments(session as Session, podUrl);
+      appointmentsData.value = appointments;
+    } catch (error) {
+      appointmentsError.value = true;
+    }
+  });
 </script>
 
 <style scoped>
@@ -54,19 +62,29 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   height: 100vh;
-
 }
+
 main {
   display: flex;
   height: 100%;
-  overflow: hidden; /* Prevent the main page from scrolling */
+  overflow: hidden; 
 }
 
-.appointments {
-  width: 66.67%; /* 2/3 of the width */
-  height: 100%; /* Ensure it takes the full height */
-  overflow-y: auto; /* Make the appointments section scrollable */
+.appointments-container {
+  width: 66.67%;
+  height: 100%; 
+  overflow-y: auto; 
   margin-bottom: 1rem;
+}
+
+.error-message, .loading-message {
+  width: 66.67%;
+  height: 100%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: red;
+  flex-wrap: wrap;
 }
 
 .personal-information {

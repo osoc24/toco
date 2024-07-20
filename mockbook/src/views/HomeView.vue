@@ -1,22 +1,18 @@
 <template>
-  <Header pfp-src="https://thispersondoesnotexist.com" :name="userProfile.name"></Header>
+  <HeaderBase :pfp-src="userProfile.img" :name="userProfile.name" title="MOCKBOOK"></HeaderBase>    
   <main>
-    <div class="profile">
-      <!-- <p>{{ userProfile.description }}</p> -->
-      <!-- <p>{{ userProfile.mbox }}</p> -->
+    <div v-if="postsError" class="error-message">
+        <p>Unable to load profile information. Please check your access permissions or try again later.</p>
     </div>
-    <Posts :posts="postsData" :name="userProfile.name"/>
+    <Posts v-else :posts="postsData" :name="userProfile.name"/>
   </main>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import Header from '@/components/home/Header.vue';
+import HeaderBase from '@/components/home/header/HeaderBase.vue';
 import Posts from '@/components/home/Posts.vue';
-
-// import { getPosts, getProfileInfo, getAppointments } from '@/lib/solid';
 import {getPosts, getProfileInfo} from 'loama-controller';
-import router from '@/router';
 import { store } from '@/store';
 import type { Session } from '@inrupt/solid-client-authn-browser';
 
@@ -28,20 +24,22 @@ const userProfile = ref({
   description: ''
 });
 const postsData = ref();
+const postsError = ref(false);
 
-const podUrl = 'https://css12.onto-deside.ilabt.imec.be/osoc1';
+const podUrl = store.usedPod.replace(/\/$/, '');
 
 onMounted(async () => {
-  try {
-    const fetchedUserProfile = await getProfileInfo(session as Session, podUrl);
-    console.log("fetchedUserProfile", fetchedUserProfile);
-    userProfile.value = fetchedUserProfile;
+  console.log("podUrl: ", podUrl);
+  const fetchedUserProfile = await getProfileInfo(session as Session, podUrl);
+  userProfile.value = fetchedUserProfile;
+  console.log(fetchedUserProfile);
 
+  try {
     const posts = await getPosts(session as Session, podUrl);
-    console.log("fetchPosts", posts);
+    console.log(posts);
     postsData.value = posts;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    postsError.value = true;
   }
 });
 </script>
@@ -51,4 +49,12 @@ main {
   padding: 4rem;
 }
 
+.error-message{
+  height: 100%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: red;
+  flex-wrap: wrap;
+}
 </style>

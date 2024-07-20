@@ -36,7 +36,7 @@ aside {
     border-radius: 0.5rem;
     display: flex;
     flex-flow: column nowrap;
-    border: 0.25rem solid #008307;
+    border: 0.25rem solid var(--dark-blue);
     background-color: var(--off-white);
 }
 aside > p {
@@ -62,7 +62,7 @@ select {
     cursor: pointer;
 }
 aside > span {
-    background-color: #008307;
+    background-color: var(--dark-blue);
     color: var(--off-white);
     font-family: Raleway;
     font-style: normal;

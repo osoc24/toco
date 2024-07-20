@@ -9,7 +9,6 @@
   <script setup lang="ts">
  import Post from "./Post.vue";  
   const props = defineProps<{
-    // posts: { id: number, author: string, content: string, likes: number, comments: number }[]
     posts: { name: string, image: string, text: string, video: string }[],
     name: string
   }>();

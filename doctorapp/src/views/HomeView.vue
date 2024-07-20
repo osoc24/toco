@@ -43,7 +43,6 @@ onMounted(async () => {
     try {
       const fetchedUserProfile = await getProfileInfo(session as Session, podUrl);
       userProfile.value = fetchedUserProfile;
-      console.log("userprofile", fetchedUserProfile);
     } catch (error) {
       profileError.value = true;
     }

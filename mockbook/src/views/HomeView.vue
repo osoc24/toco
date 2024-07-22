@@ -29,14 +29,11 @@ const postsError = ref(false);
 const podUrl = store.usedPod.replace(/\/$/, '');
 
 onMounted(async () => {
-  console.log("podUrl: ", podUrl);
   const fetchedUserProfile = await getProfileInfo(session as Session, podUrl);
   userProfile.value = fetchedUserProfile;
-  console.log(fetchedUserProfile);
 
   try {
     const posts = await getPosts(session as Session, podUrl);
-    console.log(posts);
     postsData.value = posts;
   } catch (error) {
     postsError.value = true;

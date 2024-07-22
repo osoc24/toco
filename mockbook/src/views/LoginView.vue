@@ -36,7 +36,6 @@ export default {
   methods: {
     toggleSidePanel() {
       this.isPanelOpen = !this.isPanelOpen;
-      console.log(this.isPanelOpen, 'isPanelOpen');
     }
   }
 };

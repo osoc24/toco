@@ -41,9 +41,6 @@ header {
         padding: 15px 30px;
     }
 
-/* header h1 {
-    height: 0.75rem;
-} */
 
 img {
     border-radius: 50%;

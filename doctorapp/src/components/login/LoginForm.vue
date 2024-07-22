@@ -48,6 +48,7 @@ const login = () => {
   .then(() => {
     showWarning.value = false;
     isLoading.value = false;
+    store.setUsedPod(issuer);
   })
   .catch((e) => {
     showWarning.value = true;

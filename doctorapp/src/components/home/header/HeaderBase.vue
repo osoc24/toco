@@ -21,7 +21,6 @@ defineProps<{
 
 const isContextMenuHidden = ref(true)
 
-
 function toggleContextMenu() {
     isContextMenuHidden.value = !isContextMenuHidden.value
 }
@@ -30,17 +29,16 @@ function toggleContextMenu() {
 
 <style scoped>
 header {
-        width: 100%;	
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #008307;
-        color: #ffffff;
-        padding: 15px 30px;
-    }
-
+    width: 100%;	
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #008307;
+    color: #ffffff;
+    padding: 15px 30px;
+}
 
 img {
     border-radius: 50%;

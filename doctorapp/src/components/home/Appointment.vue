@@ -5,12 +5,12 @@
       </div>
       <div class="appointment-content">
         <div>
-          <p><strong>Time:</strong> {{ time }}</p>
-          <p><strong>Date:</strong> {{ date }}</p>
+          <p><b>Time:</b> {{ time }}</p>
+          <p><b>Date:</b> {{ date }}</p>
         </div>
         <div>
-          <p><strong>Type:</strong> {{ type }}</p>
-          <p><strong>Location:</strong> {{ location }}</p>
+          <p><b>Type:</b> {{ type }}</p>
+          <p><b>Location:</b> {{ location }}</p>
         </div>
       </div>
     </div>

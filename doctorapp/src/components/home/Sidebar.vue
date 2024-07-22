@@ -1,11 +1,20 @@
 <template>
-  <div class="personal-information">
+  <aside class="personal-information">
     <img :src="img" alt="profile picture" />
     <h1>{{ name }}</h1>
-    <p><strong>Description:</strong> {{ description.slice(0, 150) }} ...</p>
-    <p><strong>Email:</strong> <a :href="'mailto:' + mbox">{{ mbox.replace('mailto:', '') }}</a></p>
-    <p><strong>Phone Number:</strong> <a :href="'tel:' + phone">{{ phone.replace('tel:', '') }}</a></p>
-  </div>
+    <p>
+        <b>Description:&emsp;</b>
+        {{ description.slice(0, 150) }}...
+    </p>
+    <p>
+        <b>Email:&emsp;</b>
+        <a :href="'mailto:' + mbox">{{ mbox.replace('mailto:', '') }}</a>
+    </p>
+    <p>
+        <b>Phone Number:&emsp;</b>
+        <a :href="'tel:' + phone">{{ phone.replace('tel:', '') }}</a>
+    </p>
+  </aside>
 </template>
 
 <script setup lang="ts">

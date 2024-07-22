@@ -30,16 +30,16 @@ function toggleContextMenu() {
 
 <style scoped>
 header {
-        width: 100%;	
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        align-items: center;
-        background-color: var(--dark-blue);
-        color: #ffffff;
-        padding: 15px 30px;
-    }
+    width: 100%;	
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--dark-blue);
+    color: #ffffff;
+    padding: 15px 30px;
+}
 
 img {
     border-radius: 50%;

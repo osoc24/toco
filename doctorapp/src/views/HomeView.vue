@@ -11,7 +11,14 @@
       <div v-if="profileError" class="error-message">
         <p>Unable to load profile information. Please check your access permissions or try again later.</p>
       </div>
-      <Sidebar v-else :name="userProfile.name" :description="userProfile.description" :mbox="userProfile.mbox" :img="userProfile.img" :phone="userProfile.phone" class="personal-information"/>
+      <Sidebar 
+        v-else
+        :name="userProfile.name"
+        :description="userProfile.description"
+        :mbox="userProfile.mbox"
+        :img="userProfile.img"
+        :phone="userProfile.phone" class="personal-information"
+      />
     </main>
   </div>
 </template>
